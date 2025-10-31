@@ -1,0 +1,14 @@
+.attendo-brand {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: 6px; /* good spacing between letters */
+  color: hsl(171, 100%, 41%); /* Bulma's default primary color */
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.attendo-brand:hover {
+  color: hsl(171, 100%, 30%);
+  transform: scale(1.05);
+}

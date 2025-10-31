@@ -1,0 +1,62 @@
+<div class="modal is-active">
+    <div class="modal-background" (click)="onClose()"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Edit Shift</p>
+            <button class="delete" aria-label="close" (click)="onClose()"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="field">
+                <label class="label">Emp Id</label>
+                <div class="control">
+                    <input class="input" disabled [value]="attendanceData.empID" type="text">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Emp Name</label>
+                <div class="control">
+                    <input class="input" disabled [value]="attendanceData.empName" type="text">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Log In Time</label>
+                <div class="control">
+                    <input class="input" [(ngModel)]="Newcheckin">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Log Out Time</label>
+                <div class="control">
+                    <input class="input" [(ngModel)]="NewcheckOut">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Approved By</label>
+                <div class="control">
+                    <div class="select is-fullwidth">
+                        <select [(ngModel)]="selectedRole">
+                            <option value="">Select a Option</option>
+                            @if(roles.length===0){
+                            <option disabled>Contact Admin</option>
+                            }
+
+                            @for(role of roles;track role.role_id){
+                            @if(role.role_id != 1 && role.role_id != 2 ){
+                            <option [value]="role.role_id">{{role.role_name}}</option>
+                            }
+
+                            }
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <div class="buttons">
+                <button (click)="Save()" class="button is-success">Update</button>
+                <button class="button" (click)="onClose()">Cancel</button>
+            </div>
+        </footer>
+    </div>
+</div>
