@@ -1,0 +1,46 @@
+<div class="box m-5">
+    <div class="field">
+        <label class="label" for="start-date">Select Starting Date:</label>
+        <div class="control">
+            <input class="input" type="date" id="start-date" [(ngModel)]="startDate" name="start-date">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label" for="end-date">Select End Date:</label>
+        <div class="control">
+            <input class="input" type="date" id="end-date" [(ngModel)]="endDate" name="end-date">
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <button (click)="generateLog()" class="button is-primary" type="submit">
+                Generate Log
+            </button>
+        </div>
+    </div>
+</div>
+<div class="box m-5">
+    @for (log of logs; track log.id) {
+    @if (log.Action === 'UPDATE') {
+    <p>
+        {{ log.Dashboard_User }} updated employee: <b>{{ log.EmployeeName }}</b> shift. <br>
+        Actual login: {{ log.actual_login_time }},
+        actual logout: {{ log.actual_logout_time }} → <br>
+        Updated login: {{ log.updated_login_time }},
+        updated logout: {{ log.updated_logout_time }} <br>
+        on {{ log.updated_on }} — Approved by {{ log.Approver }}
+    </p>
+    }
+
+    @if (log.Action === 'DELETE') {
+    <p>
+        {{ log.Dashboard_User }} deleted employee: <b>{{ log.EmployeeName }}</b> shift. <br>
+        Original login: {{ log.actual_login_time }},
+        logout: {{ log.actual_logout_time }} <br>
+        on {{ log.updated_on }} — Approved by {{ log.Approver }}
+    </p>
+    }
+    }
+
+</div>

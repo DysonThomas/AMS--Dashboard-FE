@@ -2,7 +2,12 @@
     <div class="modal-background" (click)="onClose()"></div>
     <div class="modal-card">
         <header class="modal-card-head">
+            @if(selected=='0'){
             <p class="modal-card-title">Edit Shift</p>
+            }
+            @if(selected=='1'){
+            <p class="modal-card-title">Delete shift</p>
+            }
             <button class="delete" aria-label="close" (click)="onClose()"></button>
         </header>
         <section class="modal-card-body">
@@ -54,7 +59,12 @@
         </section>
         <footer class="modal-card-foot">
             <div class="buttons">
+                @if(selected=='0'){
                 <button (click)="Save()" class="button is-success">Update</button>
+                }
+                @if(selected=='1'){
+                <button (click)="Delete()" class="button is-success">Delete</button>
+                }
                 <button class="button" (click)="onClose()">Cancel</button>
             </div>
         </footer>

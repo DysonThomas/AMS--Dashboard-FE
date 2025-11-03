@@ -5,10 +5,11 @@ import { Attendanceservice } from '../../Services/api';
 import { Navbar } from '../navbar/navbar';
 import { Attendancehome } from '../attendancehome/attendancehome';
 import { Manageshift } from '../manageshift/manageshift';
+import { Actionlogs } from '../actionlogs/actionlogs';
 
 @Component({
   selector: 'app-homepage',
-  imports: [Navbar, Attendancehome, Manageshift],
+  imports: [Navbar, Attendancehome, Manageshift, Actionlogs],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })

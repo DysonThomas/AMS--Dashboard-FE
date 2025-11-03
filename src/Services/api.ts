@@ -53,11 +53,50 @@ export class Attendanceservice {
     return this.http.put(this.apiUrlHeader + '/updatefacerec', newattendance, { headers });
   }
   updateLog(token: string, logs: any) {
+    console.log('aaaa', logs);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     });
 
     return this.http.post(this.apiUrlHeader + '/setUpdateLog', logs, { headers });
+  }
+  updateShiftStatus(token: string, userId: string) {
+    console.log('inside api');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    const body = { userId };
+    return this.http.put(this.apiUrlHeader + '/closeshift', body, { headers });
+  }
+  // Delete a shift
+  deleteLog(token: string, log_id: string) {
+    console.log(log_id);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.delete(this.apiUrlHeader + `/deleteShift?log_id=${log_id}`, { headers });
+  }
+  // fetch Log
+  getLog(token: string, startDate: string, endDate: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    const params = { startDate, endDate }; // ✅ use params for GET
+
+    return this.http.get(`${this.apiUrlHeader}/getLog`, { headers, params });
+  }
+  getTotalHours(token: string, data: { startDate: string; endDate: string }): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    const params = new HttpParams().set('startDate', data.startDate).set('endDate', data.endDate);
+
+    return this.http.get(`${this.apiUrlHeader}/getTotalHours`, { headers, params });
   }
 }

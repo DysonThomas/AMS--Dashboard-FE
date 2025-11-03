@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Attendanceservice } from '../../Services/api';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Authservice } from '../../Services/authservice';
 
 @Component({
   selector: 'app-filtershift',
@@ -11,8 +12,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class Filtershift {
   @Output() sendArray = new EventEmitter<any[]>();
+  @Output() sendTotalHours = new EventEmitter<any[]>();
   @Output() sendStatus = new EventEmitter<boolean>();
-  constructor(private attendanceService: Attendanceservice, private snackBar: MatSnackBar) {}
+  constructor(
+    private attendanceService: Attendanceservice,
+    private snackBar: MatSnackBar,
+    private auth: Authservice
+  ) {}
   attendanceData: any[] = [];
   users: any[] = [];
   startDate: string = '';
@@ -20,6 +26,7 @@ export class Filtershift {
   showSecondbutton: boolean = false;
   showTable: boolean = false;
   selectedUser: string = '';
+  totalHours: any[] = [];
   onSelectUser(event: any) {
     this.showSecondbutton = true;
     this.selectedUser = event.target.value;
@@ -44,7 +51,19 @@ export class Filtershift {
       this.attendanceData = data;
       this.sendArray.emit(this.attendanceData);
       this.sendStatus.emit(this.showSecondbutton);
-      console.log(this.attendanceData);
+      this.attendanceService
+        .getTotalHours(this.auth.getToken(), { startDate: this.startDate, endDate: this.endDate })
+        .subscribe({
+          next: (data) => {
+            this.totalHours = data;
+            this.sendTotalHours.emit(this.totalHours);
+            console.log('Total Hours:', this.totalHours);
+          },
+          error: (err) => {
+            console.error('Error fetching total hours:', err);
+            this.showAlert('Failed to load attendance data');
+          },
+        });
     });
   }
 

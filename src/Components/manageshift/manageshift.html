@@ -1,5 +1,5 @@
 @if(showmodal){
-<app-modal [attendanceData]="selectedProduct" (close)="handleClose()"></app-modal>
+<app-modal [attendanceData]="selectedProduct" [selected]="selected" (close)="handleClose()"></app-modal>
 }
 
 <div class=" box">
@@ -34,13 +34,18 @@
                         <td>{{ record.empName }}</td>
                         <td>{{ record.date }}</td>
                         <td style="user-select: text; cursor: text;">{{ record.check_in }}</td>
-                        @if (record.check_out != record.check_in) {
+                        @if (record.check_out) {
                         <td style="user-select: text; cursor: text;">{{ record.check_out }}</td>
-                        }
                         <td>{{ record.duration }}</td>
+                        }
+                        @else {
+                        <td style="user-select: text; cursor: text;">Shift is Open</td>
+                        <td style=" user-select: text; cursor: text">----</td>
+                        }
+
                         <td>
                             <button (click)="edit(record)" class="button is-info mr-1">Edit</button>
-                            <button class="button is-danger">Delete</button>
+                            <button (click)="deleteShift(record)" class="button is-danger">Delete</button>
                         </td>
 
                     </tr>

@@ -14,6 +14,9 @@ export class Attendancehome {
   attendanceData: any[] = [];
   showTable: boolean = false;
   selectedUser: string = '';
+  totalHours: any[] = [];
+  showHours: boolean = false;
+
   exportToExcel(): void {
     // Prepare data for export
     const exportData = this.attendanceData.map((record) => ({
@@ -24,6 +27,7 @@ export class Attendancehome {
       'Check Out': record.check_out,
       'Work Duration': record.duration,
       'Over Night Shift': record.is_midnight_shift,
+      verified: record.updated_at !== null ? 'Verified' : '',
     }));
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
@@ -42,5 +46,13 @@ export class Attendancehome {
     this.attendanceData = receivedArray;
     console.log('Array from child:', receivedArray);
     // You can now use it — assign to variable, process, etc.
+  }
+  handletotalHours(ra: string[]) {
+    console.log('Inside Home');
+    this.totalHours = ra;
+    console.log('Total from child:', this.totalHours);
+  }
+  viewHours() {
+    this.showHours = !this.showHours;
   }
 }

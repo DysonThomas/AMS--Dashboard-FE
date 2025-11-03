@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { Filtershift } from '../filtershift/filtershift';
 import { Modal } from '../modal/modal';
+import { Authservice } from '../../Services/authservice';
+import { Attendanceservice } from '../../Services/api';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-manageshift',
@@ -9,17 +12,24 @@ import { Modal } from '../modal/modal';
   styleUrl: './manageshift.css',
 })
 export class Manageshift {
+  constructor(
+    private api: Attendanceservice,
+    private snackBar: MatSnackBar,
+    private auth: Authservice
+  ) {}
   @ViewChild(Filtershift) filterShiftComponent!: Filtershift;
   attendanceData: any = [];
   showmodal: boolean = false;
   selectedProduct: any = {};
   showSecondButton: boolean = false;
+  selected: string = '';
   handleArrayFromChild(receivedArray: string[]) {
     this.attendanceData = receivedArray;
     console.log('Array from child:', receivedArray);
     // You can now use it — assign to variable, process, etc.
   }
   edit(product: any) {
+    this.selected = '0';
     console.log(product);
     this.selectedProduct = product;
     this.showmodal = true;
@@ -34,6 +44,17 @@ export class Manageshift {
   }
   handlestatusFromChild(receivedStatus: boolean) {
     this.showSecondButton = receivedStatus;
-    console.log('Dyson', this.showSecondButton);
+  }
+  deleteShift(record: any) {
+    this.selectedProduct = record;
+    this.showmodal = true;
+    this.selected = '1';
+  }
+  showAlert(msg: string) {
+    this.snackBar.open(msg, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
   }
 }
