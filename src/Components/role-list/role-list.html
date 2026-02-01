@@ -1,0 +1,65 @@
+<!-- /q:/telsimattendance/Attendo - Dashboard/attendo/src/Components/role-list/role-list.html -->
+<!-- Bulma-based role cards with a "Manage" button -->
+
+<section class="section">
+    <div class="container">
+        <!-- <div class="column">
+
+            <h1 class="title is-4">Roles</h1>
+            <button class="button is-primary is-small">Add New Role</button>
+        </div> -->
+
+        <div class="columns is-multiline is-variable is-3">
+            <!-- Super Admin -->
+            @for(role of Roles; track role.role_id) {
+            <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="level" style="margin-top:0.6rem;">
+                            <div class="level-left">
+                                <div class="media">
+                                    <div class="media-content">
+                                        <p class="title is-5">{{role.role_name}}</p>
+                                        <p class="subtitle is-7 mt-2 has-text-grey">{{role.role_description}}
+                                        </p>
+                                    </div>
+                                    <!-- <div class="media-right">
+                                <span class="tag is-danger is-light">Owner</span>
+
+                            </div> -->
+                                </div>
+
+                                <div class="content" style="margin-top:0.5rem;">
+                                    <!-- <div class="tags">
+                                <span class="tag is-small is-info">Users</span>
+                                <span class="tag is-small">Roles</span>
+                                <span class="tag is-small">Settings</span>
+                            </div> -->
+                                </div>
+                            </div>
+                            <!-- <div class="level-left">
+                                    <div class="level-item">
+                                        <span class="has-text-weight-semibold">5</span>
+                                        <span class="ml-2 has-text-grey">Admins</span>
+                                    </div>
+                                </div> -->
+                            <!-- <div class="level-right">
+                                <div class="level-item">
+                                    <button class="button is-primary is-small">Manage</button>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            }
+            <!-- Admin -->
+
+
+        </div>
+    </div>
+</section>
+
+<!-- Optional small helper styles -->

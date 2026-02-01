@@ -99,4 +99,38 @@ export class Attendanceservice {
 
     return this.http.get(`${this.apiUrlHeader}/getTotalHours`, { headers, params });
   }
+  // api to get all employee details
+  getAllEmployees(token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get(`${this.apiUrlHeader}/getAllEmployeeDetails`, { headers });
+  }
+  // update employee details
+  updateEmployeeDetails(token: string, employeeData: any): Observable<any> {
+    console.log('API Employee Data:', employeeData);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put(`${this.apiUrlHeader}/updateEmployeeDetails`, employeeData, { headers });
+  }
+  // Update employee status
+  updateEmployeeStatus(token: string, userID: string, isActive: boolean): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    const body = { userID, isActive };
+    return this.http.put(`${this.apiUrlHeader}/updateEmployeeStatus`, body, { headers });
+  }
+  updateFaceId(token: string, userID: string, isEdit: boolean): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    const body = { userID, isEdit };
+    return this.http.put(`${this.apiUrlHeader}/updatenewface`, body, { headers });
+  }
 }

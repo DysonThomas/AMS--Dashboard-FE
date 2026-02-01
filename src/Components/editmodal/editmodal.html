@@ -1,0 +1,53 @@
+<div class="modal is-active">
+    <div class="modal-background"></div>
+    <!-- Edit Employee -->
+    @if(action == 'edit'){
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Edit Details of Employee <span
+                    class="has-text-weight-bold">{{employee.userName}}</span>
+            </p>
+            <button class="delete" (click)="onCloseModal()" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- textbox to edit employee details   -->
+            <label class="label">Employee ID</label>
+            <input class="input" type="text" [(ngModel)]="employee.userID" disabled>
+            <label class="label">Name</label>
+            <input class="input" type="text" [(ngModel)]="employee.userName">
+            @if(employee.isActive=='1'){
+            <label class="label">Status</label>
+            <input class="input" type="text" value="Active Employee" disabled>
+            }
+            @if(employee.isActive=='0'){
+            <label class="label">Status</label>
+            <input class="input" type="text" value="Inactive Employee" disabled>
+            }
+            <label class="label">Email</label>
+            <input class="input" type="email" [(ngModel)]="employee.email">
+            <label class="label">Phone Number</label>
+            <input class="input" type="text" [(ngModel)]="employee.phone_number">
+            <label class="label">Start Date</label>
+            <input class="input" type="date" [(ngModel)]="employee.startdate">
+            <label class="label">End Date</label>
+            <input class="input" type="date" [(ngModel)]="employee.enddate">
+            <label class="label">Department</label>
+            <input class="input" type="text" [(ngModel)]="employee.department">
+            <label class="label">Address</label>
+            <textarea class="textarea" [(ngModel)]="employee.address" placeholder="Enter address">
+</textarea>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" (click)="onSaveChanges()">Save changes</button>
+            @if(employee.isActive==1){
+            <button (click)="statusUpdate()" class=" ml-3 button is-danger">Make Inactive</button>
+            }
+            @if(employee.isActive==0){
+            <button (click)="statusUpdate()" class=" ml-3 button is-success">Make Active</button>
+            }
+            <button class=" ml-3 button" (click)="onCloseModal()">Cancel</button>
+        </footer>
+    </div>
+    }
+
+</div>

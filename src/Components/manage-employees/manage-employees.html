@@ -1,0 +1,46 @@
+@if(showModal){
+<app-editmodal [employee]="selectedEmployee" [action]="action" (closeModal)="showModal=false"></app-editmodal>
+}
+
+<div class="container">
+    <div class="title mt-4 ">
+        <h1 class="is-size-3 has-text-weight-bold">Manage Employees</h1>
+    </div>
+
+    <div class="columns is-multiline">
+
+        @for (employee of employeeData; track employee.userID) {
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title is-5">{{employee.userName}}</p>
+                    @if(employee.isActive=="1"){
+                    <p class=" subtitle has-text-success is-7"> Active</p>
+                    }
+                    @else{
+                    <p class=" subtitle has-text-danger is-7"> Inactive</p>
+                    }
+
+                    <p class=" is-7">Employee ID: {{employee.userID}}</p>
+                    <!-- <p class=" is-7">Position: {{employee.position}}</p> -->
+                    <p class=" is-6">Email: {{employee.email}}</p>
+                    <p class=" is-6">Department: {{employee.department}}</p>
+                    <p class=" is-6">Phone: {{employee.phone_number}}</p>
+                </div>
+                <footer class="card-footer">
+                    <p class="card-footer-item">
+                        <button (click)="editemp(employee)" class="button is-success">Edit</button>
+                        @if(employee.isEdit==false){
+                        <button (click)="reqFaceID(employee)" class="ml-4 button is-success">Request Face ID</button>
+                        }
+                        @else{
+                        <button (click)="reqFaceID(employee)" class="ml-4 button is-success">Cancel Face ID
+                            Request</button>
+                        }
+                    </p>
+                </footer>
+            </div>
+        </div>
+        }
+    </div>
+</div>

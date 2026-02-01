@@ -6,18 +6,24 @@ import { Navbar } from '../navbar/navbar';
 import { Attendancehome } from '../attendancehome/attendancehome';
 import { Manageshift } from '../manageshift/manageshift';
 import { Actionlogs } from '../actionlogs/actionlogs';
+import { RoleList } from '../role-list/role-list';
+import { ManageEmployees } from '../manage-employees/manage-employees';
 
 @Component({
   selector: 'app-homepage',
-  imports: [Navbar, Attendancehome, Manageshift, Actionlogs],
+  imports: [Navbar, Attendancehome, Manageshift, Actionlogs, RoleList, ManageEmployees],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })
 export class Homepage {
   token: string = '';
   userData: any;
-  selection: string = 'FA';
-  constructor(private auth: Authservice, private router: Router, private api: Attendanceservice) {}
+  selection: string = 'employees';
+  constructor(
+    private auth: Authservice,
+    private router: Router,
+    private api: Attendanceservice,
+  ) {}
   ngOnInit() {
     this.token = this.auth.getToken();
     console.log('token', this.token);
