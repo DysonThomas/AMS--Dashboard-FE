@@ -11,6 +11,7 @@ import { Authservice } from '../../Services/authservice';
 })
 export class Editmodal {
   @Input() employee: any = {};
+  @Input() store: any = {};
   @Input() action: string = '';
   ngOnInit() {
     console.log('Edit Modal Employee Data:', this.employee);
@@ -48,5 +49,36 @@ export class Editmodal {
         console.error('Error updating employee details:', error);
       },
     });
+  }
+  onStoreChanges() {
+    this.api.updateStoreDetails(this.auth.getToken(), this.store).subscribe({
+      next: (response) => {
+        console.log('Store details updated successfully:', response);
+        this.onCloseModal();
+      },
+      error: (error) => {
+        console.error('Error updating store details:', error);
+      },
+    });
+  }
+  storeStatusUpdate() {
+    console.log(
+      'Updating store status for Store ID:',
+      this.store.storeId,
+      'Current Status:',
+      this.store.isActive,
+    );
+    this.api
+      .updateStoreStatus(this.auth.getToken(), this.store.storeId, !this.store.isActive)
+      .subscribe({
+        next: (response) => {
+          console.log('Store status updated successfully:', response);
+          this.store.isActive = !this.store.isActive;
+          this.onCloseModal();
+        },
+        error: (error) => {
+          console.error('Error updating store status:', error);
+        },
+      });
   }
 }

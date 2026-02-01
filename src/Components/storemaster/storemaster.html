@@ -1,0 +1,38 @@
+@if(showModal){
+<app-editmodal [store]="selectedStore" [action]="action" (closeModal)="showModal=false"></app-editmodal>
+}
+<div class="container">
+    <div class="title mt-4 ">
+        <h1 class="is-size-3 has-text-weight-bold">Manage Stores</h1>
+    </div>
+
+    <div class="columns is-multiline">
+
+        @for (storedata of storeDetails; track storedata.storeId) {
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+
+                    <p class="title is-5">{{storedata.name}}</p>
+                    @if(storedata.isActive) {
+                    <p class=" subtitle has-text-success is-7"> Active</p>
+                    } @else {
+
+                    <p class=" subtitle has-text-danger is-7"> Inactive</p>
+                    }
+                    <p class=" is-7">Store ID: {{storedata.storeId}}`</p>
+                    <!-- <p class=" is-7">Position: {{employee.position}}</p> -->
+                    <p class=" is-6">Address: {{storedata.address}}</p>
+                    <!-- <p class=" is-6">Started: {{storedata.createdAt}}</p> -->
+                    <!-- <p class=" is-6">Phone: {{storedata.phone}}</p> -->
+                </div>
+                <footer class="card-footer">
+                    <p class="card-footer-item">
+                        <button (click)="editStore(storedata)" class="button is-success">Edit</button>
+                    </p>
+                </footer>
+            </div>
+        </div>
+        }
+    </div>
+</div>

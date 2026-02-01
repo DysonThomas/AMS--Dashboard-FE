@@ -1,7 +1,7 @@
 <div class="modal is-active">
     <div class="modal-background"></div>
     <!-- Edit Employee -->
-    @if(action == 'edit'){
+    @if(action == 'editEmployee'){
     <div class="modal-card">
         <header class="modal-card-head">
             <p class="modal-card-title">Edit Details of Employee <span
@@ -44,6 +44,44 @@
             }
             @if(employee.isActive==0){
             <button (click)="statusUpdate()" class=" ml-3 button is-success">Make Active</button>
+            }
+            <button class=" ml-3 button" (click)="onCloseModal()">Cancel</button>
+        </footer>
+    </div>
+    }
+    <!-- Edit Store -->
+    @if(action == 'editStore'){
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Edit Details of Store <span class="has-text-weight-bold">{{store.name}}</span>
+            </p>
+            <button class="delete" (click)="onCloseModal()" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- textbox to edit store details   -->
+            <label class="label">Store ID</label>
+            <input class="input" type="text" [(ngModel)]="store.storeId" disabled>
+            <label class="label">Name</label>
+            <input class="input" type="text" [(ngModel)]="store.name">
+            @if(store.isActive=='1'){
+            <label class="label">Status</label>
+            <input class="input" type="text" value="Active Store" disabled>
+            }
+            @if(store.isActive=='0'){
+            <label class="label">Status</label>
+            <input class="input" type="text" value="Inactive Store" disabled>
+            }
+            <label class="label">Address</label>
+            <textarea class="textarea" [(ngModel)]="store.address" placeholder="Enter address">
+</textarea>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" (click)="onStoreChanges()">Save changes</button>
+            @if(store.isActive==1){
+            <button (click)="storeStatusUpdate()" class=" ml-3 button is-danger">Make Inactive</button>
+            }
+            @if(store.isActive==0){
+            <button (click)="storeStatusUpdate()" class=" ml-3 button is-success">Make Active</button>
             }
             <button class=" ml-3 button" (click)="onCloseModal()">Cancel</button>
         </footer>

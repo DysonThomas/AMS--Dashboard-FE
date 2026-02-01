@@ -8,17 +8,26 @@ import { Manageshift } from '../manageshift/manageshift';
 import { Actionlogs } from '../actionlogs/actionlogs';
 import { RoleList } from '../role-list/role-list';
 import { ManageEmployees } from '../manage-employees/manage-employees';
+import { Storemaster } from '../storemaster/storemaster';
 
 @Component({
   selector: 'app-homepage',
-  imports: [Navbar, Attendancehome, Manageshift, Actionlogs, RoleList, ManageEmployees],
+  imports: [
+    Navbar,
+    Attendancehome,
+    Manageshift,
+    Actionlogs,
+    RoleList,
+    ManageEmployees,
+    Storemaster,
+  ],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })
 export class Homepage {
   token: string = '';
   userData: any;
-  selection: string = 'employees';
+  selection: string = 'store';
   constructor(
     private auth: Authservice,
     private router: Router,

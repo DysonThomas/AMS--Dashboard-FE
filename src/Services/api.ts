@@ -133,4 +133,27 @@ export class Attendanceservice {
     const body = { userID, isEdit };
     return this.http.put(`${this.apiUrlHeader}/updatenewface`, body, { headers });
   }
+  getAllStores(token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get(`${this.apiUrlHeader}/getAllStores`, { headers });
+  }
+  updateStoreDetails(token: string, storeData: any): Observable<any> {
+    console.log('API Store Data:', storeData);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put(`${this.apiUrlHeader}/updateStoreDetails`, storeData, { headers });
+  }
+  updateStoreStatus(token: string, storeId: string, isActive: boolean): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    const body = { storeId, isActive };
+    return this.http.put(`${this.apiUrlHeader}/updateStoreStatus`, body, { headers });
+  }
 }

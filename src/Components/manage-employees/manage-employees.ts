@@ -45,7 +45,7 @@ export class ManageEmployees {
   }
   editemp(e: any) {
     this.showModal = true;
-    this.action = 'edit';
+    this.action = 'editEmployee';
     this.selectedEmployee = e;
   }
 }
