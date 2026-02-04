@@ -14,10 +14,12 @@ export class Filtershift {
   @Output() sendArray = new EventEmitter<any[]>();
   @Output() sendTotalHours = new EventEmitter<any[]>();
   @Output() sendStatus = new EventEmitter<boolean>();
+  usedId: string = '';
+  storeID: string = '';
   constructor(
     private attendanceService: Attendanceservice,
     private snackBar: MatSnackBar,
-    private auth: Authservice
+    private auth: Authservice,
   ) {}
   attendanceData: any[] = [];
   users: any[] = [];
@@ -47,28 +49,31 @@ export class Filtershift {
     }
     this.attendanceData = [];
     this.showTable = true;
-    this.attendanceService.getAttendance(this.startDate, this.endDate).subscribe((data: any) => {
-      this.attendanceData = data;
-      this.sendArray.emit(this.attendanceData);
-      this.sendStatus.emit(this.showSecondbutton);
-      this.attendanceService
-        .getTotalHours(this.auth.getToken(), { startDate: this.startDate, endDate: this.endDate })
-        .subscribe({
-          next: (data) => {
-            this.totalHours = data;
-            this.sendTotalHours.emit(this.totalHours);
-            console.log('Total Hours:', this.totalHours);
-          },
-          error: (err) => {
-            console.error('Error fetching total hours:', err);
-            this.showAlert('Failed to load attendance data');
-          },
-        });
-    });
+    this.attendanceService
+      .getAttendance(this.startDate, this.endDate, this.storeID)
+      .subscribe((data: any) => {
+        this.attendanceData = data;
+        this.sendArray.emit(this.attendanceData);
+        this.sendStatus.emit(this.showSecondbutton);
+        this.attendanceService
+          .getTotalHours(this.auth.getToken(), { startDate: this.startDate, endDate: this.endDate })
+          .subscribe({
+            next: (data) => {
+              this.totalHours = data;
+              this.sendTotalHours.emit(this.totalHours);
+              console.log('Total Hours:', this.totalHours);
+            },
+            error: (err) => {
+              console.error('Error fetching total hours:', err);
+              this.showAlert('Failed to load attendance data');
+            },
+          });
+      });
   }
 
   ngOnInit() {
-    this.attendanceService.getUsers().subscribe((data: any) => {
+    this.storeID = this.auth.getStoreId();
+    this.attendanceService.getUsers(this.storeID).subscribe((data: any) => {
       this.users = data;
       console.log('users', this.users);
     });
@@ -83,10 +88,9 @@ export class Filtershift {
       return;
     }
     this.attendanceData = [];
-    console.log('Fetching attendance for user:', this.selectedUser);
     this.showTable = true;
     this.attendanceService
-      .getSpecificUserAttendance(this.selectedUser, this.startDate, this.endDate)
+      .getSpecificUserAttendance(this.selectedUser, this.startDate, this.endDate, this.storeID)
       .subscribe((data: any) => {
         this.attendanceData = data;
         this.sendArray.emit(this.attendanceData);

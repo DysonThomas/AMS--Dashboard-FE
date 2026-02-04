@@ -10,12 +10,76 @@ import { Authservice } from '../../Services/authservice';
   styleUrl: './editmodal.css',
 })
 export class Editmodal {
+  onChangePassword() {
+    if (this.newPassword !== this.confirmPassword) {
+      console.error('Passwords do not match!');
+      alert('Passwords do not match!');
+      return;
+    }
+    console.log(this.newPassword, this.auth.getUserId());
+    this.api
+      .resetPassword(this.auth.getToken(), this.newPassword, this.auth.getUserId())
+      .subscribe({
+        next: (response) => {
+          console.log('Password changed successfully:', response);
+          this.onCloseModal();
+        },
+        error: (error) => {
+          console.error('Error changing password:', error);
+        },
+      });
+  }
+  onAddNewLogin() {
+    this.newLogin.storeId = this.auth.getStoreId();
+    this.api.addEmployeeLoginDetails(this.auth.getToken(), this.newLogin).subscribe({
+      next: (response) => {
+        console.log('New login added successfully:', response);
+        this.onCloseModal();
+      },
+      error: (error) => {
+        console.error('Error adding new login:', error);
+      },
+    });
+  }
+  onLoginDetailsChanges() {
+    this.api.updateEmployeeLoginDetails(this.auth.getToken(), this.selectedLogin).subscribe({
+      next: (response) => {
+        console.log('Login details updated successfully:', response);
+        this.onCloseModal();
+      },
+      error: (error) => {
+        console.error('Error updating login details:', error);
+      },
+    });
+  }
+  currentEmployeeName: string = '';
+  @Input() selectedLogin: any = {};
   @Input() employee: any = {};
   @Input() store: any = {};
   @Input() action: string = '';
+  confirmPassword: string = '';
+  newPassword: string = '';
+  newLogin: any = {
+    role: '',
+  };
+  roles: any;
+  filteredRoles: any;
   ngOnInit() {
-    console.log('Edit Modal Employee Data:', this.employee);
+    console.log('Edit Modal Selected Login:', this.selectedLogin);
+    // console.log('Edit Modal Employee Data:', this.employee);
     console.log('Action:', this.action);
+    this.api.getRole().subscribe((res) => {
+      console.log('Roles fetched:', res);
+      this.roles = res;
+      this.filteredRoles = this.roles.filter((role: any) => role.role_id !== 1);
+      console.log('Filtered roles:', this.filteredRoles);
+    });
+    this.api.getEmployeeName(this.auth.getToken(), this.auth.getUserId()).subscribe({
+      next: (data) => {
+        console.log('Current Employee Name:', data);
+        this.currentEmployeeName = data.full_name;
+      },
+    });
   }
   @Output() closeModal = new EventEmitter<void>();
   onCloseModal() {

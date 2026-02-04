@@ -19,3 +19,9 @@
 @if(selection=='store'){
 <app-storemaster>></app-storemaster>
 }
+@if(selection=='rdu'){
+<app-dashboard-and-app-users></app-dashboard-and-app-users>
+}
+@if(selection=='cp'){
+<app-editmodal [action]="action" (closeModal)="closeModal()"></app-editmodal>
+}

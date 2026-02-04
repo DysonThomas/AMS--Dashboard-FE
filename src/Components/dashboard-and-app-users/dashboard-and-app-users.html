@@ -1,0 +1,43 @@
+@if(showModal){
+<app-editmodal [selectedLogin]="selectedLogin" [action]="action" (closeModal)="closeModal()"></app-editmodal>
+}
+<div class="container">
+    <!-- Title + Add button row -->
+    <div class="level mt-4">
+        <div class="level-left">
+            <h1 class="is-size-3 has-text-weight-bold">Manage Logins</h1>
+        </div>
+
+        <div class="level-right">
+            <button class="button is-primary" (click)="onAddLogin()">
+                <span>Add Login</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="columns is-multiline">
+
+        @for (login of LoginData; track login.id) {
+        <div class="column is-one-third">
+            <div class="card">
+                <div class="card-content">
+                    <p class="title is-5">{{login.full_name}}</p>
+
+                    <p class=" is-7">Employee ID: {{login.role}}</p>
+                    <!-- <p class=" is-7">Position: {{employee.position}}</p> -->
+                    <p class=" is-6">Email: {{login.email}}</p>
+                    <p class=" is-6">Role: {{login.role_name}}</p>
+                    <!-- <p class=" is-6">Department: {{login.created_at}}</p>
+                    <p class=" is-6">Phone: {{login.updated_at}}</p> -->
+                </div>
+                <footer class="card-footer">
+                    <p class="card-footer-item">
+                        <button (click)="EditLogin(login)" class="button is-success">Edit</button>
+                    </p>
+                </footer>
+            </div>
+        </div>
+        }
+    </div>
+</div>

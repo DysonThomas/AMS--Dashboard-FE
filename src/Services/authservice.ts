@@ -12,6 +12,12 @@ export class Authservice {
   getToken(): string {
     return localStorage.getItem('token') || '';
   }
+  getStoreId(): string {
+    return localStorage.getItem('storeId') || '';
+  }
+  getUserId(): string {
+    return localStorage.getItem('userId') || '';
+  }
 
   login(token: string) {
     localStorage.setItem('token', token);

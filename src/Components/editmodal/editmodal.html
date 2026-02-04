@@ -87,5 +87,103 @@
         </footer>
     </div>
     }
+    <!-- Edit User Login -->
+    @if(action == 'edit-login'){
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Edit Login<span class="has-text-weight-bold">{{employee.userName}}</span>
+            </p>
+            <button class="delete" (click)="onCloseModal()" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- textbox to edit employee details   -->
+            <label class="label">Employee ID</label>
+            <input class="input" type="text" [(ngModel)]="selectedLogin.id" disabled>
+            <label class="label">Name</label>
+            <input class="input" type="text" [(ngModel)]="selectedLogin.full_name">
+
+            <label class="label">Email</label>
+            <input class="input" type="email" [(ngModel)]="selectedLogin.email">
+            <label class="label">Department</label>
+
+            <section class="select is-fullwidth">
+                <select [(ngModel)]="selectedLogin.role">
+                    @for (role of roles; track role.role_id) {
+                    @if (role.role_id != 1) {
+                    <option [selected]="selectedLogin.role == role.role_id" [value]="role.role_id">{{role.role_name}}
+                    </option>
+                    }
+                    }
+                </select>
+            </section>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" (click)="onLoginDetailsChanges()">Save changes</button>
+            <button class=" ml-3 button" (click)="onCloseModal()">Cancel</button>
+        </footer>
+    </div>
+    }
+    <!-- Add New User Login -->
+    @if(action == 'New-Login'){
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Add New Login</p>
+            <button class="delete" (click)="onCloseModal()" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- textbox to add new login details   -->
+            <label class="label">Name</label>
+            <input class="input" type="text" [(ngModel)]="newLogin.full_name" placeholder="Enter full name">
+
+            <label class="label">Email</label>
+            <input class="input" type="email" [(ngModel)]="newLogin.email" placeholder="Enter email">
+
+            <label class="label">Password</label>
+            <input class="input" type="password" [(ngModel)]="newLogin.password" placeholder="Enter password">
+
+            <label class="label">Department</label>
+
+            <section class="select is-fullwidth">
+                <select [(ngModel)]="newLogin.role">
+                    <option value="" disabled selected>Select role</option>
+                    @for (role of roles; track role.role_id) {
+                    @if (role.role_id != 1) {
+                    <option [value]="role.role_id">{{role.role_name}}</option>
+                    }
+                    }
+                </select>
+            </section>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" (click)="onAddNewLogin()">Add Login</button>
+            <button class=" ml-3 button" (click)="onCloseModal()">Cancel</button>
+        </footer>
+    </div>
+    }
+    <!-- Change Password -->
+    @if(action == 'cp'){
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Change Password of <span class="has-text-weight-bold">{{currentEmployeeName}}
+                </span>
+            </p>
+            <button class="delete" (click)="onCloseModal()" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- textbox to change password   -->
+            <label class="label">New Password</label>
+            <input class="input" type="password" [(ngModel)]="newPassword" placeholder="Enter new password">
+            <label class="label">Confirm Password</label>
+            <input class="input" type="password" [(ngModel)]="confirmPassword" placeholder="Confirm new password">
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" (click)="onChangePassword()">Change Password</button>
+            <button class=" ml-3 button" (click)="onCloseModal()">Cancel</button>
+        </footer>
+    </div>
+    }
+
+
+
 
 </div>

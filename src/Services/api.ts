@@ -8,23 +8,33 @@ import { Observable } from 'rxjs';
 export class Attendanceservice {
   private apiUrlHeader = 'http://localhost:3000/api/user'; // Replace with your backend API URL
   constructor(private http: HttpClient) {}
-  getAttendance(startDate: string, endDate: string): Observable<any> {
+  getAttendance(startDate: string, endDate: string, storeId: string): Observable<any> {
     const apiUrl = `${this.apiUrlHeader}/getattendance`;
-    console.log(startDate, endDate); // Add query parameters
-    const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
+    console.log(startDate, endDate, storeId); // Add query parameters
+    const params = new HttpParams()
+      .set('startDate', startDate)
+      .set('endDate', endDate)
+      .set('storeId', storeId);
 
     return this.http.get(apiUrl, { params });
   }
-  getUsers(): Observable<any> {
+  getUsers(storeId: string): Observable<any> {
     const apiUrl = `${this.apiUrlHeader}/getallemp`;
-    return this.http.get(apiUrl);
+    const params = new HttpParams().set('storeId', storeId);
+    return this.http.get(apiUrl, { params });
   }
-  getSpecificUserAttendance(userId: string, startDate: string, endDate: string): Observable<any> {
+  getSpecificUserAttendance(
+    userId: string,
+    startDate: string,
+    endDate: string,
+    storeId: string,
+  ): Observable<any> {
     const apiUrl = `${this.apiUrlHeader}/getspecificattendance`;
     const params = new HttpParams()
       .set('userID', userId)
       .set('startDate', startDate)
-      .set('endDate', endDate);
+      .set('endDate', endDate)
+      .set('storeId', storeId);
     return this.http.get(apiUrl, { params });
   }
   login(credentials: { email: string; password: string }): Observable<any> {
@@ -100,12 +110,13 @@ export class Attendanceservice {
     return this.http.get(`${this.apiUrlHeader}/getTotalHours`, { headers, params });
   }
   // api to get all employee details
-  getAllEmployees(token: string): Observable<any> {
+  getAllEmployees(token: string, storeId: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get(`${this.apiUrlHeader}/getAllEmployeeDetails`, { headers });
+    const params = new HttpParams().set('storeId', storeId);
+    return this.http.get(`${this.apiUrlHeader}/getAllEmployeeDetails`, { headers, params });
   }
   // update employee details
   updateEmployeeDetails(token: string, employeeData: any): Observable<any> {
@@ -155,5 +166,56 @@ export class Attendanceservice {
     });
     const body = { storeId, isActive };
     return this.http.put(`${this.apiUrlHeader}/updateStoreStatus`, body, { headers });
+  }
+
+  getStoreID(userId: string): Observable<any> {
+    console.log('Getting store ID for user:', userId);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    const params = new HttpParams().set('userId', userId);
+    return this.http.get(`${this.apiUrlHeader}/getStoreId`, { headers, params });
+  }
+  getDashbaordemployees(storeId: string): Observable<any> {
+    const apiUrl = `${this.apiUrlHeader}/getDashbaordemployees`;
+    const params = new HttpParams().set('storeId', storeId);
+    return this.http.get(apiUrl, { params });
+  }
+  updateEmployeeLoginDetails(token: string, loginData: any): Observable<any> {
+    console.log('API Login Data:', loginData);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.put(`${this.apiUrlHeader}/updateDashboardUser`, loginData, { headers });
+  }
+  // api to add login details
+  addEmployeeLoginDetails(token: string, loginData: any): Observable<any> {
+    console.log('API Login Data:', loginData);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post(`${this.apiUrlHeader}/addDashboardUser`, loginData, { headers });
+  }
+
+  // Api to reset password
+  resetPassword(token: string, newPassword: string, userId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    const body = { newPassword, userId };
+    return this.http.put(`${this.apiUrlHeader}/changePassword`, body, { headers });
+  }
+
+  // Api to fetch em name using userId
+  getEmployeeName(token: string, userId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    const params = new HttpParams().set('userId', userId);
+    return this.http.get(`${this.apiUrlHeader}/getEmployeeName`, { headers, params });
   }
 }

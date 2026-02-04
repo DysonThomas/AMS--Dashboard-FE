@@ -19,9 +19,10 @@ export class ManageEmployees {
     private auth: Authservice,
   ) {}
   ngOnInit() {
+    const storeId = this.auth.getStoreId();
     const token = this.auth.getToken();
     if (token) {
-      this.api.getAllEmployees(token).subscribe({
+      this.api.getAllEmployees(token, storeId).subscribe({
         next: (response) => {
           this.employeeData = response;
         },

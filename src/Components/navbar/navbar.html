@@ -1,6 +1,6 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item">
+        <a (click)="orderClick('Home')" class="navbar-item">
             <h3 class="navbar-item attendo-brand">ATTENDO</h3>
 
         </a>
@@ -54,6 +54,18 @@
 
                 </div>
             </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Options
+                </a>
+                <div class="navbar-dropdown">
+                    <a (click)="orderClick('cp')" class="navbar-item">
+                        Change Password
+                    </a>
+                </div>
+            </div>
+
+
             <div class="navbar-item">
 
 
