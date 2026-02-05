@@ -182,7 +182,38 @@
         </footer>
     </div>
     }
+    @if(action == 'add'){
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title title is-5">Add New Attendance Record</p>
+            <button class="delete" (click)="onCloseModal()" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- Form to add new attendance record -->
+            <label class="label">Employee ID</label>
+            <select class="input" [(ngModel)]="newAttendance.empId">
+                <option value="" disabled selected>Select Employee ID</option>
+                @for (employee of employeedata; track employee.userID) {
+                <option [value]="employee.userID">{{employee.userID}} - {{employee.userName}}</option>
+                }
+            </select>
+            <label class="label">Login Date</label>
+            <input class="input" type="date" [(ngModel)]="newAttendance.logindate">
 
+            <label class="label">Check-In Time</label>
+            <input class="input" type="time" [(ngModel)]="newAttendance.log_in_time">
+            <label class="label">Logout Date</label>
+            <input class="input" type="date" [(ngModel)]="newAttendance.logoutdate">
+            <label class="label">Check-Out Time</label>
+            <input class="input" type="time" [(ngModel)]="newAttendance.log_out_time">
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" (click)="onAddNewAttendance()">Add Attendance</button>
+            <button class=" ml-3 button" (click)="onCloseModal()">Cancel</button>
+        </footer>
+    </div>
+
+    }
 
 
 

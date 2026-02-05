@@ -218,4 +218,13 @@ export class Attendanceservice {
     const params = new HttpParams().set('userId', userId);
     return this.http.get(`${this.apiUrlHeader}/getEmployeeName`, { headers, params });
   }
+  // Add new attendance record
+  addNewAttendance(token: string, attendanceData: any): Observable<any> {
+    console.log('API Attendance Data:', attendanceData);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.post(`${this.apiUrlHeader}/addAttendance`, attendanceData, { headers });
+  }
 }

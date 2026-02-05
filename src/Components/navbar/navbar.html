@@ -1,11 +1,11 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a (click)="orderClick('Home')" class="navbar-item">
-            <h3 class="navbar-item attendo-brand">ATTENDO</h3>
-
+            <h3 class="attendo-brand">ATTENDO</h3>
         </a>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger" [class.is-active]="isMobileMenuOpen" (click)="toggleMobileMenu()"
+            aria-label="menu" [attr.aria-expanded]="isMobileMenuOpen">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -13,37 +13,33 @@
         </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu">
-
-
+    <div class="navbar-menu" [class.is-active]="isMobileMenuOpen">
         <div class="navbar-end">
-
-
 
             <a (click)="orderClick('FA')" class="navbar-item">
                 Fetch Attendance
             </a>
 
-            <!-- <a class="navbar-item disabled">
-                Generate Roater
-            </a> -->
-
+            @if(role == "1" || role == "2" || role == "3" || role == "7") {
             <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    Manage
-                </a>
+                <a class="navbar-link">Manage</a>
 
                 <div class="navbar-dropdown">
-                    <a (click)="orderClick('employees')" class="navbar-item">
-                        Employees
-                    </a>
                     <a (click)="orderClick('shift')" class="navbar-item">
                         Shift
                     </a>
+
+
+                    <a (click)="orderClick('employees')" class="navbar-item">
+                        Employees
+                    </a>
+                    @if(role != "7") {
                     <a (click)="orderClick('rdu')" class="navbar-item">
                         Register Dashboard User
                     </a>
-                    @if(role=="1"){
+                    }
+
+                    @if(role == "1") {
                     <a (click)="orderClick('role')" class="navbar-item">
                         Role
                     </a>
@@ -51,13 +47,12 @@
                         Store
                     </a>
                     }
-
                 </div>
             </div>
+            }
+
             <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    Options
-                </a>
+                <a class="navbar-link">Options</a>
                 <div class="navbar-dropdown">
                     <a (click)="orderClick('cp')" class="navbar-item">
                         Change Password
@@ -65,23 +60,20 @@
                 </div>
             </div>
 
+            @if(role == "1" || role == "2" || role == "3") {
+            <a (click)="orderClick('logs')" class="navbar-item">
+                See Logs
+            </a>
+            }
 
-            <div class="navbar-item">
-
-
-                <a (click)="orderClick('logs')" class="navbar-item">
-                    See Logs
-                </a>
-
-            </div>
             <div class="navbar-item">
                 <div class="buttons">
-
                     <a (click)="logout()" class="button is-danger">
                         Log Out
                     </a>
                 </div>
             </div>
+
         </div>
     </div>
 </nav>

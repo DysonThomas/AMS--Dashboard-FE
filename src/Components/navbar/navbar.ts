@@ -12,7 +12,25 @@ export class Navbar {
   @Input() userData: any;
   @Output() selectionChange = new EventEmitter<string>();
   role: string = '';
+  isMobileMenuOpen: boolean = false;
 
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+  ngOnInit() {
+    // Navbar burger toggle
+    const burgers = Array.from(document.querySelectorAll('.navbar-burger'));
+
+    burgers.forEach((burger: any) => {
+      burger.addEventListener('click', () => {
+        const target = burger.dataset.target;
+        const menu = document.getElementById(target);
+
+        burger.classList.toggle('is-active');
+        menu?.classList.toggle('is-active');
+      });
+    });
+  }
   ngOnChanges() {
     if (this.userData) {
       this.role = this.userData.role;

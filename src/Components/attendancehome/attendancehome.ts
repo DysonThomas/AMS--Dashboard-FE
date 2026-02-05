@@ -3,14 +3,21 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import * as XLSX from 'xlsx';
 import { Filtershift } from '../filtershift/filtershift';
+import { Editmodal } from '../editmodal/editmodal';
 
 @Component({
   selector: 'app-attendancehome',
-  imports: [FormsModule, CommonModule, Filtershift],
+  imports: [FormsModule, CommonModule, Filtershift, Editmodal],
   templateUrl: './attendancehome.html',
   styleUrl: './attendancehome.css',
 })
 export class Attendancehome {
+  showModal: boolean = false;
+  action: string = '';
+  addNewAttendance() {
+    this.showModal = true;
+    this.action = 'add';
+  }
   attendanceData: any[] = [];
   showTable: boolean = false;
   selectedUser: string = '';

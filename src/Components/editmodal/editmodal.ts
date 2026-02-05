@@ -10,6 +10,36 @@ import { Authservice } from '../../Services/authservice';
   styleUrl: './editmodal.css',
 })
 export class Editmodal {
+  onAddNewAttendance() {
+    const loginDate = this.newAttendance.logindate; // "2026-02-06"
+    const loginTime = this.newAttendance.log_in_time; // "20:47"
+    const logoutDate = this.newAttendance.logoutdate; // "2026-02-05"
+    const logoutTime = this.newAttendance.log_out_time; // "20:47"
+
+    // Validate inputs
+    if (!loginDate || !loginTime || !logoutDate || !logoutTime) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    const attendanceData = {
+      userID: this.newAttendance.empId,
+      log_in_time: `${loginDate} ${loginTime}:00`, // "2026-02-06 20:47:00"
+      log_out_time: `${logoutDate} ${logoutTime}:00`, // "2026-02-05 20:47:00"
+    };
+
+    console.log('Attendance Datahaaa:', attendanceData);
+
+    this.api.addNewAttendance(this.auth.getToken(), attendanceData).subscribe({
+      next: (response) => {
+        console.log('New attendance added successfully:', response);
+        this.onCloseModal();
+      },
+      error: (error) => {
+        console.error('Error adding new attendance:', error);
+      },
+    });
+  }
   onChangePassword() {
     if (this.newPassword !== this.confirmPassword) {
       console.error('Passwords do not match!');
@@ -62,12 +92,13 @@ export class Editmodal {
   newLogin: any = {
     role: '',
   };
+  employeedata: any = [];
+  newAttendance: any = {
+    empId: '',
+  };
   roles: any;
   filteredRoles: any;
   ngOnInit() {
-    console.log('Edit Modal Selected Login:', this.selectedLogin);
-    // console.log('Edit Modal Employee Data:', this.employee);
-    console.log('Action:', this.action);
     this.api.getRole().subscribe((res) => {
       console.log('Roles fetched:', res);
       this.roles = res;
@@ -78,6 +109,12 @@ export class Editmodal {
       next: (data) => {
         console.log('Current Employee Name:', data);
         this.currentEmployeeName = data.full_name;
+      },
+    });
+    this.api.getAllEmployees(this.auth.getToken(), this.auth.getStoreId()).subscribe({
+      next: (data) => {
+        this.employeedata = data;
+        console.log('All Employees Data:', this.employeedata);
       },
     });
   }
